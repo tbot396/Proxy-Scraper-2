@@ -1,0 +1,69 @@
+harvest:
+  search:
+    engines:
+      - google
+      - bing
+      - duckduckgo
+    queries: []
+    freshness_days: 7
+    max_results_per_query: 50
+    tag_file: "tags.json"
+  crawl:
+    respect_robots: true
+    request_delay_seconds: 2.0
+    max_requests_per_minute: 30
+
+scan:
+  max_workers: 200
+  connect_timeout_seconds: 3.0
+  max_connections_per_second: 500
+  retries: 1
+
+testing:
+  type_detector:
+    test_url: "http://httpbin.org/ip"
+  anonymity:
+    echo_url: "http://httpbin.org/headers"
+  latency:
+    test_url: "http://httpbin.org/ip"
+    num_pings: 3
+  geo:
+    maxmind_db_path: "GeoLite2-City.mmdb"
+  target_checks: []
+
+server:
+  listen_host: "127.0.0.1"
+  listen_port: 8080
+  rotation: per_request
+  sticky_ttl_seconds: 300
+  upstream_filter:
+    require_tags: []
+    exclude_tags: []
+  max_retries: 3
+  health_check_interval_seconds: 60
+
+filters:
+  security:
+    blocklist_files: []
+    exclude_asns: []
+  country:
+    mode: allow
+    list: []
+  speed:
+    max_latency_ms: 1500
+
+export:
+  sinks: []
+
+gui:
+  show_tag_editor: true
+  show_config_dialog: true
+  theme: dark
+
+logging:
+  level: INFO
+  file: proxyscraper.log
+  max_bytes: 10485760
+  backup_count: 3
+
+database_path: proxyscraper.db
